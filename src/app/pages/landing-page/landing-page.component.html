@@ -1,0 +1,230 @@
+<nav class="navbar fixed top-0 w-full z-50 transition-all duration-300 border-b border-transparent">
+  <div class="max-w-7xl mx-auto px-6 lg:px-8">
+    <div class="flex justify-between items-center h-20">
+      <div class="flex-shrink-0 flex items-center cursor-pointer">
+        <span class="brand-logo text-2xl text-gray-900">inkwell.</span>
+      </div>
+
+      <div class="hidden md:flex items-center space-x-10">
+        <a href="#" class="text-sm text-gray-600 hover:text-gray-900 font-medium transition-colors">Our Story</a>
+        <a href="#blogs" class="text-sm text-gray-600 hover:text-gray-900 font-medium transition-colors">Membership</a>
+        <a href="#categories" class="text-sm text-gray-600 hover:text-gray-900 font-medium transition-colors">Write</a>
+      </div>
+
+      <div class="hidden md:flex items-center space-x-5">
+        <a routerLink="/login" class="text-sm text-gray-600 hover:text-gray-900 font-medium transition-colors cursor-pointer">Sign in</a>
+        <a routerLink="/signup" class="bg-gray-900 hover:bg-black text-white px-5 py-2.5 rounded-full text-sm font-medium transition-colors cursor-pointer">
+          Get started
+        </a>
+      </div>
+      
+      <div class="md:hidden flex items-center">
+        <button (click)="toggleMenu()" class="text-gray-900 focus:outline-none p-2">
+          <lucide-icon [img]="isMenuOpen() ? XIcon : MenuIcon" class="w-6 h-6"></lucide-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  @if (isMenuOpen()) {
+    <div class="md:hidden absolute top-20 left-0 w-full bg-white border-b border-gray-100 shadow-xl z-40">
+      <div class="px-6 py-6 space-y-4">
+        <a href="#" class="block text-base font-medium text-gray-900">Our Story</a>
+        <a href="#blogs" class="block text-base font-medium text-gray-900">Membership</a>
+        <a href="#categories" class="block text-base font-medium text-gray-900">Write</a>
+        <div class="pt-6 flex flex-col space-y-3">
+          <a routerLink="/login" (click)="toggleMenu()" class="w-full text-left text-base font-medium text-gray-900 cursor-pointer">Sign in</a>
+          <a routerLink="/signup" (click)="toggleMenu()" class="w-full text-center bg-gray-900 text-white py-3 rounded-full font-medium cursor-pointer">Get started</a>
+        </div>
+      </div>
+    </div>
+  }
+</nav>
+
+<!-- Minimal Premium Hero Section -->
+<section class="relative pt-32 pb-24 lg:pt-48 lg:pb-32 bg-[#FAFAFA] border-b border-gray-200">
+  <div class="max-w-7xl mx-auto px-6 lg:px-8">
+    <div class="grid lg:grid-cols-12 gap-16 items-center">
+      
+      <div class="lg:col-span-6 max-w-2xl">
+        <h1 class="hero-text text-6xl sm:text-7xl lg:text-[5rem] font-heading font-extrabold tracking-tighter text-gray-900 leading-[1.05] mb-8">
+          Human<br/>
+          stories &amp; ideas
+        </h1>
+        
+        <p class="hero-text text-xl text-gray-700 mb-10 max-w-lg leading-relaxed font-medium">
+          A place to read, write, and deepen your understanding. Read ideas that matter to you.
+        </p>
+        
+        <div class="hero-text flex items-center gap-4">
+          <a routerLink="/signup" class="bg-gray-900 hover:bg-black text-white px-8 py-3.5 rounded-full text-lg font-medium transition-colors cursor-pointer">
+            Start reading
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-visual lg:col-span-6 relative w-full h-[500px] hidden lg:block">
+        <!-- Mockup of a realistic clean article view -->
+        <div class="absolute top-0 right-0 w-full h-full bg-white border border-gray-200 rounded-lg shadow-2xl overflow-hidden flex flex-col">
+          <div class="h-10 border-b border-gray-100 flex items-center px-4 space-x-2 bg-gray-50/50">
+            <div class="w-2.5 h-2.5 rounded-full bg-gray-300"></div>
+            <div class="w-2.5 h-2.5 rounded-full bg-gray-300"></div>
+            <div class="w-2.5 h-2.5 rounded-full bg-gray-300"></div>
+          </div>
+          <div class="p-10 flex-1 overflow-hidden relative">
+            <div class="flex items-center space-x-3 mb-6">
+              <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=150&auto=format&fit=crop" class="w-10 h-10 rounded-full" alt="Author">
+              <div>
+                <div class="font-medium text-sm text-gray-900">Sarah Williams</div>
+                <div class="text-xs text-gray-500">Published in UX Collective · 4 min read</div>
+              </div>
+            </div>
+            <h2 class="text-3xl font-heading font-bold text-gray-900 mb-4 leading-tight">The Art of Minimalism in Modern UI Design</h2>
+            <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=800&auto=format&fit=crop" class="w-full h-48 object-cover rounded mb-6" alt="Cover">
+            <p class="text-gray-700 text-sm leading-relaxed mb-4 font-serif">
+              Design is not just what it looks like and feels like. Design is how it works. When we strip away the unnecessary, we are left with the essence of the experience. This journey into minimalism is not about having less, but about making room for what truly matters...
+            </p>
+            <div class="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-white to-transparent"></div>
+          </div>
+        </div>
+        <!-- Decorative subtle elements -->
+        <div class="absolute -z-10 -bottom-8 -right-8 w-64 h-64 bg-gray-100 rounded-full blur-3xl opacity-50"></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Trending Section -->
+<section class="py-12 bg-white border-b border-gray-200">
+  <div class="max-w-7xl mx-auto px-6 lg:px-8">
+    <div class="flex items-center space-x-2 mb-6">
+      <lucide-icon [img]="ClockIcon" class="w-5 h-5 text-gray-800"></lucide-icon>
+      <h2 class="text-sm font-bold text-gray-900 uppercase tracking-widest">Trending on Inkwell</h2>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-10">
+      @for (post of featuredBlogs; track post.id) {
+        <article class="gsap-reveal flex gap-4 group cursor-pointer">
+          <div class="text-3xl font-heading font-bold text-gray-200 group-hover:text-gray-300 transition-colors mt-[-0.25rem]">0{{post.id}}</div>
+          <div class="flex flex-col">
+            <div class="flex items-center space-x-2 mb-2">
+              <img [src]="post.author.avatar" [alt]="post.author.name" class="w-5 h-5 rounded-full object-cover">
+              <p class="text-xs font-semibold text-gray-900">{{ post.author.name }}</p>
+            </div>
+            <h3 class="text-base font-bold text-gray-900 mb-1 leading-snug group-hover:underline decoration-1 underline-offset-2">
+              {{ post.title }}
+            </h3>
+            <p class="text-xs text-gray-500">{{ post.readingTime }}</p>
+          </div>
+        </article>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- Main Content Area (Split) -->
+<section id="blogs" class="py-16 lg:py-24 bg-white">
+  <div class="max-w-7xl mx-auto px-6 lg:px-8">
+    <div class="grid lg:grid-cols-12 gap-16">
+      
+      <!-- Feed -->
+      <div class="lg:col-span-8 space-y-12">
+        @for (post of featuredBlogs; track post.id) {
+          <article class="gsap-reveal flex flex-col sm:flex-row gap-6 sm:gap-8 group">
+            <div class="flex-1 flex flex-col justify-center">
+              <div class="flex items-center space-x-2 mb-3">
+                <img [src]="post.author.avatar" [alt]="post.author.name" class="w-6 h-6 rounded-full object-cover">
+                <p class="text-sm font-semibold text-gray-900">{{ post.author.name }}</p>
+              </div>
+              <h3 class="text-xl sm:text-2xl font-heading font-bold text-gray-900 mb-2 leading-tight group-hover:text-gray-700 transition-colors cursor-pointer">
+                {{ post.title }}
+              </h3>
+              <p class="text-gray-600 mb-4 line-clamp-2 text-base leading-relaxed hidden sm:block">
+                {{ post.excerpt }}
+              </p>
+              <div class="flex items-center justify-between mt-auto">
+                <div class="flex items-center text-xs text-gray-500 space-x-2">
+                  <span class="bg-gray-100 text-gray-800 px-2 py-1 rounded-full">{{ post.category }}</span>
+                  <span>{{ post.readingTime }}</span>
+                </div>
+                <button class="text-gray-400 hover:text-gray-900">
+                  <lucide-icon [img]="Bookmark" class="w-5 h-5"></lucide-icon>
+                </button>
+              </div>
+            </div>
+            <div class="w-full sm:w-48 h-48 sm:h-32 bg-gray-100 flex-shrink-0 cursor-pointer">
+              <img [src]="post.coverImage" [alt]="post.title" class="w-full h-full object-cover">
+            </div>
+          </article>
+        }
+      </div>
+
+      <!-- Sidebar -->
+      <div class="lg:col-span-4 hidden lg:block">
+        <div class="sticky top-28 space-y-8">
+          <div>
+            <h3 class="text-sm font-bold text-gray-900 mb-4 uppercase tracking-wider">Discover more of what matters to you</h3>
+            <div class="flex flex-wrap gap-2">
+              @for (category of categories; track category) {
+                <button class="gsap-pill bg-gray-50 border border-gray-200 text-gray-700 px-4 py-2 rounded-full text-sm font-medium hover:bg-gray-100 transition-colors">
+                  {{ category }}
+                </button>
+              }
+            </div>
+            <button class="text-sm text-green-700 hover:text-green-800 font-medium mt-6">See more topics</button>
+          </div>
+
+          <div class="border-t border-gray-100 pt-6">
+            <h3 class="text-sm font-bold text-gray-900 mb-4 uppercase tracking-wider">Why write on Inkwell?</h3>
+            <div class="space-y-4">
+              @for (feature of whyChooseFeatures; track feature.title) {
+                <div class="flex items-start space-x-3">
+                  <lucide-icon [img]="feature.icon" class="w-5 h-5 text-gray-400 mt-0.5"></lucide-icon>
+                  <div>
+                    <h4 class="text-sm font-bold text-gray-900">{{ feature.title }}</h4>
+                    <p class="text-xs text-gray-600 mt-1 leading-relaxed">{{ feature.description }}</p>
+                  </div>
+                </div>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Call To Action -->
+<section class="py-24 bg-black text-white">
+  <div class="max-w-4xl mx-auto px-6 lg:px-8 text-center">
+    <h2 class="text-5xl sm:text-6xl font-heading font-bold mb-8 tracking-tight">
+      Join a community of millions.
+    </h2>
+    <p class="text-xl text-gray-400 mb-10 max-w-2xl mx-auto font-medium">
+      Read, write, and inspire. Create an account to personalize your feed and follow your favorite authors.
+    </p>
+    <a routerLink="/signup" class="inline-block bg-white text-black px-8 py-4 rounded-full font-bold text-lg hover:bg-gray-100 transition-colors cursor-pointer">
+      Get started
+    </a>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-white border-t border-gray-200 py-10">
+  <div class="max-w-7xl mx-auto px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4">
+    <div class="flex items-center">
+      <span class="font-heading font-bold text-xl text-gray-900 tracking-tight">inkwell.</span>
+    </div>
+    <div class="flex flex-wrap justify-center gap-6 text-sm text-gray-500">
+      <a href="#" class="hover:text-gray-900 transition-colors">Help</a>
+      <a href="#" class="hover:text-gray-900 transition-colors">Status</a>
+      <a href="#" class="hover:text-gray-900 transition-colors">Writers</a>
+      <a href="#" class="hover:text-gray-900 transition-colors">Blog</a>
+      <a href="#" class="hover:text-gray-900 transition-colors">Careers</a>
+      <a href="#" class="hover:text-gray-900 transition-colors">Privacy</a>
+      <a href="#" class="hover:text-gray-900 transition-colors">Terms</a>
+      <a href="#" class="hover:text-gray-900 transition-colors">About</a>
+    </div>
+  </div>
+</footer>

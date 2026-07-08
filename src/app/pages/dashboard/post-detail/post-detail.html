@@ -1,0 +1,87 @@
+<div class="reader-shell">
+
+  <!-- Sticky top bar with back button -->
+  <div class="reader-topbar">
+    <button type="button" routerLink="/dashboard/home" class="reader-back-btn">
+      <lucide-icon [img]="ArrowLeftIcon" class="h-4 w-4"></lucide-icon>
+      Back to feed
+    </button>
+  </div>
+
+  <!-- Scrollable reading area -->
+  <div class="reader-body">
+    <div class="reader-content">
+
+      @if (loading()) {
+        <div style="display:flex; flex-direction:column; gap:1.5rem;">
+          <div class="reader-skeleton" style="height:2.5rem; width:70%;"></div>
+          <div class="reader-skeleton" style="height:1.25rem; width:50%;"></div>
+          <div class="reader-skeleton" style="height:380px; width:100%; border-radius:1.25rem;"></div>
+          <div style="display:flex; flex-direction:column; gap:0.75rem;">
+            <div class="reader-skeleton" style="height:1rem; width:100%;"></div>
+            <div class="reader-skeleton" style="height:1rem; width:100%;"></div>
+            <div class="reader-skeleton" style="height:1rem; width:75%;"></div>
+          </div>
+        </div>
+      }
+
+      @if (!loading() && error()) {
+        <div style="border-radius:1.25rem; border:1px solid #fecaca; background:#fef2f2; padding:1.5rem; text-align:center;">
+          <h3 style="font-size:1.125rem; font-weight:700; color:#7f1d1d;">Error</h3>
+          <p style="margin-top:0.5rem; color:#b91c1c;">{{ error() }}</p>
+        </div>
+      }
+
+      @if (!loading() && !error() && post()) {
+        <article>
+
+          <!-- Title -->
+          <h1 style="font-family:'Poppins',sans-serif; font-size:clamp(1.75rem,5vw,2.75rem); font-weight:800; line-height:1.2; color:rgb(17 24 39); letter-spacing:-0.02em; margin:0;">
+            {{ post().title }}
+          </h1>
+
+          @if (post().subtitle) {
+            <p style="margin-top:1rem; font-size:1.125rem; line-height:1.7; color:rgb(75 85 99);">
+              {{ post().subtitle }}
+            </p>
+          }
+
+          <!-- Author -->
+          <div class="reader-author-strip">
+            <div class="reader-avatar">
+              @if (post().author?.avatar_url) {
+                <img [src]="post().author.avatar_url" alt="">
+              } @else {
+                {{ (post().author?.full_name || 'U').charAt(0) }}
+              }
+            </div>
+            <div>
+              <p style="font-size:0.875rem; font-weight:700; color:rgb(17 24 39); margin:0;">
+                {{ post().author?.full_name || 'Anonymous' }}
+              </p>
+              <p style="font-size:0.8125rem; color:rgb(107 114 128); margin:0.25rem 0 0;">
+                @if (post().author?.username) {
+                  <span>&#64;{{ post().author.username }} &middot; </span>
+                }
+                {{ formatRelativeTime(post().created_at) === 'just now' ? 'just now' : formatRelativeTime(post().created_at) + ' ago' }}
+              </p>
+            </div>
+          </div>
+
+          <!-- Cover image -->
+          @if (post().cover_image) {
+            <img [src]="post().cover_image" [alt]="post().title" class="reader-cover">
+          }
+
+          <!-- Body content -->
+          <div class="reader-prose">
+            {{ post().content }}
+          </div>
+
+        </article>
+      }
+
+    </div>
+  </div>
+
+</div>

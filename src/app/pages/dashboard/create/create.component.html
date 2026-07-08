@@ -1,0 +1,109 @@
+<section class="workspace-layout">
+  <div class="workspace-header">
+    <div>
+      <p class="text-sm font-bold uppercase tracking-[0.18em] text-gray-500">Create</p>
+      <h1 class="mt-2 font-heading text-4xl font-extrabold tracking-tight text-gray-900">
+        Write with focus
+      </h1>
+    </div>
+    <div class="flex items-center gap-3">
+      <button type="button" (click)="postBlog()" class="primary-action">
+        <lucide-icon [img]="PenLineIcon" class="h-4 w-4"></lucide-icon>
+        <span>Post</span>
+      </button>
+    </div>
+  </div>
+
+  @if (uploadError()) {
+    <div class="mb-6 rounded-2xl border border-red-200 bg-red-50 p-4 text-red-700">
+      {{ uploadError() }}
+    </div>
+  }
+
+  <div class="create-studio">
+    <form class="editor-surface" (submit)="$event.preventDefault(); postBlog()">
+      <div class="editor-topline">
+        <label>
+          <span class="field-label">Category</span>
+          <input
+            type="text"
+            name="category"
+            [ngModel]="draftCategory()"
+            (ngModelChange)="draftCategory.set($event)"
+            class="field-input compact"
+            placeholder="Design, tech, stories..."
+          />
+        </label>
+        <label class="cover-chip cursor-pointer">
+          <lucide-icon [img]="ImageIcon" class="h-4 w-4"></lucide-icon>
+          <span>{{ coverImageName() || 'Upload cover' }}</span>
+          <input
+            type="file"
+            accept="image/*"
+            class="sr-only"
+            (change)="onCoverSelected($event)"
+          />
+        </label>
+      </div>
+
+      @if (coverImageData()) {
+        <img [src]="coverImageData()" alt="Selected cover" class="cover-preview">
+      }
+
+      <label class="block">
+        <span class="field-label">Title</span>
+        <input
+          type="text"
+          name="title"
+          [ngModel]="draftTitle()"
+          (ngModelChange)="draftTitle.set($event)"
+          class="title-input"
+          placeholder="Untitled story"
+        />
+      </label>
+
+      <label class="block">
+        <span class="field-label">Subtitle</span>
+        <input
+          type="text"
+          name="subtitle"
+          [ngModel]="draftSubtitle()"
+          (ngModelChange)="draftSubtitle.set($event)"
+          class="subtitle-input"
+          placeholder="Add a short promise for your reader"
+        />
+      </label>
+
+      <label class="block">
+        <span class="field-label">Body</span>
+        <textarea
+          name="body"
+          [ngModel]="draftBody()"
+          (ngModelChange)="draftBody.set($event)"
+          rows="18"
+          class="writing-area"
+          placeholder="Start writing..."
+        ></textarea>
+      </label>
+    </form>
+
+    <aside class="preview-rail">
+      <div>
+        <p class="text-sm font-bold uppercase tracking-[0.18em] text-gray-500">Live Preview</p>
+        @if (coverImageData()) {
+          <img [src]="coverImageData()" alt="Cover preview" class="preview-cover">
+        }
+        <h2 class="mt-4 font-heading text-2xl font-extrabold tracking-tight text-gray-900">
+          {{ draftTitle() || 'Untitled story' }}
+        </h2>
+        <p class="mt-3 text-sm leading-6 text-gray-600">
+          {{ draftSubtitle() || 'Your subtitle will appear here while you write.' }}
+        </p>
+      </div>
+      <div class="preview-meter">
+        <span>Post</span>
+        <strong>{{ draftBody().length }} chars</strong>
+      </div>
+    </aside>
+  </div>
+</section>

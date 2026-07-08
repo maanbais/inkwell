@@ -1,0 +1,138 @@
+<section class="library-layout">
+  <div class="workspace-header">
+    <div>
+      <p class="text-sm font-bold uppercase tracking-[0.18em] text-gray-500">My Blogs</p>
+      <h1 class="mt-2 font-heading text-4xl font-extrabold tracking-tight text-gray-900">
+        Your writing library
+      </h1>
+    </div>
+    <button type="button" (click)="requestNewBlog()" class="primary-action">
+      <lucide-icon [img]="PlusIcon" class="h-4 w-4"></lucide-icon>
+      <span>New blog</span>
+    </button>
+  </div>
+
+  <div class="blog-grid">
+    @for (blog of myBlogs(); track blog.id) {
+      <article class="blog-card">
+        <div class="blog-card-media">
+          <img [src]="blog.image" [alt]="blog.title" />
+          <span class="status-pill card-status">{{ blog.status }}</span>
+        </div>
+
+        <div class="blog-card-content">
+          <div class="blog-card-meta">
+            <span class="text-xs font-semibold text-gray-500">{{ formatRelativeTime(blog.updated) }}</span>
+            <span class="dot-separator"></span>
+            <span class="text-xs font-semibold text-gray-500">{{ blog.views }} views</span>
+          </div>
+          <h2 class="blog-card-title">{{ blog.title }}</h2>
+          <p class="blog-card-excerpt">{{ blog.excerpt }}</p>
+        </div>
+
+        <div class="blog-card-actions">
+          <button type="button" (click)="editBlog(blog)" class="secondary-action">
+            <lucide-icon [img]="EditIcon" class="h-4 w-4"></lucide-icon>
+            <span>Edit</span>
+          </button>
+          <button type="button" (click)="deleteBlog(blog.id)" class="secondary-action">
+            <lucide-icon [img]="TrashIcon" class="h-4 w-4"></lucide-icon>
+            <span>Delete</span>
+          </button>
+        </div>
+      </article>
+    } @empty {
+      <div class="empty-library">
+        <h2 class="font-heading text-2xl font-extrabold text-gray-900">No blogs yet</h2>
+        <p class="mt-2 text-sm font-medium text-gray-500">Create your first draft and it will appear here.</p>
+      </div>
+    }
+  </div>
+
+  @if (editModalOpen()) {
+    <div class="modal-backdrop" (click)="closeEditModal()"></div>
+    <section class="edit-modal">
+      <div class="edit-modal-card">
+        <div class="edit-modal-header">
+          <div>
+            <p class="text-sm font-bold uppercase tracking-[0.18em] text-gray-500">Edit blog</p>
+            <h2 class="mt-2 font-heading text-3xl font-extrabold tracking-tight text-gray-900">Update your post</h2>
+          </div>
+          <button type="button" class="icon-button" aria-label="Close edit modal" (click)="closeEditModal()">
+            ✕
+          </button>
+        </div>
+
+        <form class="edit-modal-form" (submit)="$event.preventDefault(); saveEdit()">
+          <label class="block">
+            <span class="field-label">Title</span>
+            <input
+              type="text"
+              class="field-input"
+              name="editTitle"
+              [(ngModel)]="editTitleValue"
+              required
+              autofocus
+            />
+          </label>
+
+          <label class="block">
+            <span class="field-label">Excerpt</span>
+            <textarea
+              class="field-textarea"
+              name="editExcerpt"
+              rows="4"
+              [(ngModel)]="editExcerptValue"
+              required
+            ></textarea>
+          </label>
+
+          <label class="block">
+            <span class="field-label">Body Content</span>
+            <textarea
+              class="field-textarea"
+              name="editContent"
+              rows="8"
+              [(ngModel)]="editContentValue"
+            ></textarea>
+          </label>
+
+          <div class="edit-modal-preview">
+            <p class="text-xs font-semibold text-gray-500">Live preview</p>
+            <div class="preview-card">
+              <img [src]="editingBlog()?.image" [alt]="editTitle() || 'Cover preview'" />
+              <div class="preview-copy">
+                <p class="text-sm font-semibold text-gray-500">{{ editingBlog()?.updated | date:'mediumDate' }}</p>
+                <h3 class="font-heading text-xl font-bold text-gray-900">{{ editTitle() || editingBlog()?.title }}</h3>
+                <p class="text-sm leading-6 text-gray-600">{{ editExcerpt() || editingBlog()?.excerpt }}</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="edit-modal-actions">
+            <button type="button" class="secondary-action" (click)="closeEditModal()">Cancel</button>
+            <button type="submit" class="primary-action">Save changes</button>
+          </div>
+        </form>
+      </div>
+    </section>
+  }
+
+  @if (deleteConfirmId()) {
+    <div class="modal-backdrop" (click)="cancelDelete()"></div>
+    <div style="position:fixed;inset:0;z-index:999;display:flex;align-items:center;justify-content:center;pointer-events:none;">
+      <div style="pointer-events:all;background:white;border-radius:1.5rem;border:1px solid rgb(229 231 235);box-shadow:0 32px 80px rgba(17,24,39,0.18);padding:2rem;width:100%;max-width:400px;margin:1rem;display:flex;flex-direction:column;align-items:center;text-align:center;gap:0.75rem;">
+        <div style="width:3.5rem;height:3.5rem;border-radius:50%;background:rgb(254 242 242);display:flex;align-items:center;justify-content:center;margin-bottom:0.25rem;">
+          <lucide-icon [img]="TrashIcon" style="width:1.5rem;height:1.5rem;color:rgb(220 38 38);"></lucide-icon>
+        </div>
+        <h3 style="font-family:'Poppins',sans-serif;font-size:1.125rem;font-weight:800;color:rgb(17 24 39);margin:0;">Delete this blog?</h3>
+        <p style="font-size:0.875rem;color:rgb(107 114 128);margin:0;line-height:1.6;">This will permanently remove the post and its image. This action cannot be undone.</p>
+        <div style="display:flex;gap:0.75rem;margin-top:0.75rem;width:100%;">
+          <button type="button" class="secondary-action" style="flex:1;justify-content:center;" (click)="cancelDelete()">Cancel</button>
+          <button type="button" style="flex:1;justify-content:center;display:inline-flex;align-items:center;border-radius:9999px;background:rgb(220 38 38);color:white;font-size:0.875rem;font-weight:800;padding:0.75rem 1.125rem;border:none;cursor:pointer;" (click)="confirmDelete()">Yes, delete</button>
+        </div>
+      </div>
+    </div>
+  }
+
+</section>

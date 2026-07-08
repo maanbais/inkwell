@@ -1,0 +1,12 @@
+:host {
+  display: block;
+  font-family: 'Inter', sans-serif;
+}
+
+.font-heading {
+  font-family: 'Poppins', sans-serif;
+}
+
+input:focus-visible {
+  outline: none;
+}

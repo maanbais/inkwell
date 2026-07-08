@@ -1,0 +1,85 @@
+<div class="min-h-screen bg-[#FAFAFA] text-gray-900">
+  <nav class="dashboard-nav fixed top-0 left-0 right-0 z-50 border-b border-white/70">
+    <div class="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+      <a
+        routerLink="home"
+        class="brand-logo text-2xl text-gray-900 tracking-tight"
+      >
+        inkwell.
+      </a>
+
+      <div class="hidden items-center gap-1 rounded-full border border-gray-200/80 bg-white/65 p-1 shadow-sm md:flex">
+        <button type="button" routerLink="home" routerLinkActive="nav-link-active" class="nav-link">
+          <lucide-icon [img]="HomeIcon" class="h-4 w-4"></lucide-icon>
+          <span>Home</span>
+        </button>
+        <button type="button" routerLink="create" routerLinkActive="nav-link-active" class="nav-link">
+          <lucide-icon [img]="PenLineIcon" class="h-4 w-4"></lucide-icon>
+          <span>Create</span>
+        </button>
+        <button type="button" routerLink="myblogs" routerLinkActive="nav-link-active" class="nav-link">
+          <lucide-icon [img]="BookOpenIcon" class="h-4 w-4"></lucide-icon>
+          <span>My Blogs</span>
+        </button>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <div class="hidden items-center gap-2 rounded-full border border-gray-200/80 bg-white/60 px-3 py-2 text-sm text-gray-500 shadow-sm lg:flex">
+          <lucide-icon [img]="SearchIcon" class="h-4 w-4"></lucide-icon>
+          <span>Search stories</span>
+        </div>
+
+        <div class="user-menu relative">
+          <button
+            type="button"
+            class="flex h-11 w-11 items-center justify-center rounded-full border border-gray-200 bg-white/80 text-sm font-bold text-gray-900 shadow-sm transition hover:border-gray-300"
+            aria-label="Open user menu"
+          >
+            {{ userInitial() }}
+          </button>
+
+          <div class="user-dropdown absolute right-0 top-12 w-64 rounded-2xl border border-gray-200 bg-white/90 p-2 shadow-2xl">
+            <div class="border-b border-gray-100 px-3 py-3">
+              <p class="text-sm font-bold text-gray-900">{{ userName() }}</p>
+              <p class="truncate text-xs font-medium text-gray-500">{{ userEmail() }}</p>
+            </div>
+            <button type="button" class="dropdown-item">
+              <lucide-icon [img]="SettingsIcon" class="h-4 w-4"></lucide-icon>
+              <span>Settings</span>
+            </button>
+            <button type="button" class="dropdown-item">
+              <lucide-icon [img]="LifeBuoyIcon" class="h-4 w-4"></lucide-icon>
+              <span>Customer care</span>
+            </button>
+            <button type="button" class="dropdown-item">
+              <lucide-icon [img]="UsersIcon" class="h-4 w-4"></lucide-icon>
+              <span>About us</span>
+            </button>
+            <button type="button" (click)="logout()" class="dropdown-item text-gray-900">
+              <lucide-icon [img]="LogOutIcon" class="h-4 w-4"></lucide-icon>
+              <span>Sign out</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="border-t border-gray-200/70 bg-white/55 px-4 py-2 md:hidden">
+      <div class="mx-auto grid max-w-md grid-cols-3 gap-2">
+        <button type="button" routerLink="home" routerLinkActive="mobile-nav-link-active" class="mobile-nav-link">
+          Home
+        </button>
+        <button type="button" routerLink="create" routerLinkActive="mobile-nav-link-active" class="mobile-nav-link">
+          Create
+        </button>
+        <button type="button" routerLink="myblogs" routerLinkActive="mobile-nav-link-active" class="mobile-nav-link">
+          My Blogs
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="mx-auto max-w-7xl px-4 pb-16 pt-32 sm:px-6 lg:px-8">
+    <router-outlet></router-outlet>
+  </main>
+</div>
