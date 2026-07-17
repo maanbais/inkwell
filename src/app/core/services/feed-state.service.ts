@@ -55,10 +55,16 @@ export class FeedStateService {
     const createdAt = row.created_at || row.createdAt || null;
     const updatedAt = row.updated_at || row.updatedAt || null;
 
-    // Mark as edited if updated_at is more than 60 seconds after created_at
-    const isEdited = createdAt && updatedAt
-      ? (new Date(updatedAt).getTime() - new Date(createdAt).getTime()) > 60_000
-      : false;
+    // Mark as edited if:
+    // 1. The updated_at timestamp exists and is more than 60 seconds after created_at
+    // 2. AND the current logged-in user is the author of the post (owner-only)
+    const user = this.authService.currentUser();
+    const isOwner = !!(user && (row.author_id === user.id));
+    const timeDiff = createdAt && updatedAt
+      ? (new Date(updatedAt).getTime() - new Date(createdAt).getTime())
+      : 0;
+    const isEdited = isOwner && timeDiff > 60_000;
+
 
     return {
       id: row.id,

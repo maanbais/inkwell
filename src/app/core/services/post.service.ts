@@ -193,18 +193,17 @@ export class PostService {
     return { error };
   }
 
-  private viewedPosts = new Set<string>();
-
-  // Increment view count via Postgres RPC
+  /**
+   * Increment view count via Postgres RPC.
+   * Deduplication is handled entirely at the database level using a
+   * composite primary key on the `post_views` table (user_id + post_id),
+   * ensuring one view per user across all sessions, tabs, and devices.
+   */
   async incrementViewCount(id: string) {
-    if (this.viewedPosts.has(id)) {
-      return { error: null }; // Already viewed in this session
-    }
-    
-    this.viewedPosts.add(id);
     const { error } = await this.supabase.rpc('increment_view_count', { blog_id: id });
     return { error };
   }
+
 
   // Likes & Comments
   async hasUserLiked(postId: string, userId: string) {
